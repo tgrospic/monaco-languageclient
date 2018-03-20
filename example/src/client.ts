@@ -12,19 +12,16 @@ const ReconnectingWebSocket = require('reconnecting-websocket');
 
 // register Monaco languages
 monaco.languages.register({
-    id: 'json',
-    extensions: ['.json', '.bowerrc', '.jshintrc', '.jscsrc', '.eslintrc', '.babelrc'],
-    aliases: ['JSON', 'json'],
-    mimetypes: ['application/json'],
+    id: 'rho',
+    extensions: ['.rho'],
+    aliases: ['RHO', 'rho'],
+    mimetypes: ['application/rho'],
 });
 
 // create Monaco editor
-const value = `{
-    "$schema": "http://json.schemastore.org/coffeelint",
-    "line_endings": "unix"
-}`;
+const value = `(+ 21 21)`;
 const editor = monaco.editor.create(document.getElementById("container")!, {
-    model: monaco.editor.createModel(value, 'json', monaco.Uri.parse('inmemory://model.json')),
+    model: monaco.editor.createModel(value, 'rho', monaco.Uri.parse('inmemory://model.rho')),
     glyphMargin: true,
     lightbulb: {
         enabled: true
@@ -48,10 +45,10 @@ listen({
 const services = createMonacoServices(editor);
 function createLanguageClient(connection: MessageConnection): BaseLanguageClient {
     return new BaseLanguageClient({
-        name: "Sample Language Client",
+        name: "Rho",
         clientOptions: {
             // use a language id as a document selector
-            documentSelector: ['json'],
+            documentSelector: ['rho'],
             // disable the default error handler
             errorHandler: {
                 error: () => ErrorAction.Continue,

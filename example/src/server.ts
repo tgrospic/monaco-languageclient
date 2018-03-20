@@ -8,7 +8,7 @@ import * as url from "url";
 import * as net from "net";
 import * as express from "express";
 import * as rpc from "vscode-ws-jsonrpc";
-import { launch } from "./json-server-launcher";
+import { startRhoServer } from "./rholang-server";
 
 process.on('uncaughtException', function (err: any) {
     console.error('Uncaught Exception: ', err.toString());
@@ -45,9 +45,9 @@ server.on('upgrade', (request: http.IncomingMessage, socket: net.Socket, head: B
             };
             // launch the server when the web socket is opened
             if (webSocket.readyState === webSocket.OPEN) {
-                launch(socket);
+                startRhoServer(socket);
             } else {
-                webSocket.on('open', () => launch(socket));
+                webSocket.on('open', () => startRhoServer(socket));
             }
         });
     }
